@@ -1,0 +1,256 @@
+@import "ember-cli-bootstrap-4/bootstrap";
+@import "variables.scss";
+
+
+// Note on media queries (from bootstrap):
+
+// xs - Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// sm - Small devices (landscape phones, 576px and up)
+// @media (min-width: 576px) { ... }
+
+// md - Medium devices (tablets, 768px and up)
+// @media (min-width: 768px) { ... }
+
+// lg - Large devices (desktops, 992px and up)
+// @media (min-width: 992px) { ... }
+
+// xl - Extra large devices (large desktops, 1200px and up)
+// @media (min-width: 1200px) { ... }
+
+
+.thumbnail-section {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 800px;
+
+  @include media-breakpoint-up(xl) {
+    max-width: 900px;
+  }
+}
+
+div.image-thumbnail {
+  display: inline-block;
+  width: 50%;
+  //max-width: 300px;
+  border: 1px solid white;
+
+  @include media-breakpoint-up(sm) {
+    width: 25%;
+    //max-width: 200px;
+  }
+
+}
+
+div.image-thumbnail img {
+  width: 100%;
+}
+
+.divider {
+  width: 100%;
+  background-color: rgb(245,245,245);
+  color: $divider-primary-color;
+  padding: 15px 10px 5px 10px;
+  margin: 1px 0;
+  font-size: 14px;
+
+
+  .primary, .secondary {
+    width: 50%;
+    display: inline-block;
+  }
+
+  .primary {
+    font-weight: $divider-primary-font-weight;
+  }
+
+  .secondary {
+    color: rgb(150,150,150);
+    text-align: right;
+    font-weight: $divider-secondary-font-weight;
+
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .divider {
+
+  }
+}
+
+.thumbnail-section {
+  width: 100%;
+  @include media-breakpoint-up(sm) {
+
+  }
+}
+
+
+
+.hidden {
+  display: none;
+}
+
+
+.image-loading {
+  text-align: center;
+  height: 100px;
+  .spinner-border {
+    margin-bottom: 10px;
+  }
+  .image-loading-info {
+    text-align: center;
+  }
+}
+
+.image-info, .image-loading-info {
+  color: white;
+  p {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+.image-info {
+  position: fixed;
+  // default values "bottom: 0", "right: 0", "max-height: 100%" and "max-width: 100%" are used.
+  //    These will be updated by JS based on window and image size
+  bottom: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
+
+  width: 100%;
+  overflow: auto;
+  z-index: 100;
+  text-align: right;
+  padding: 10px;
+
+  &.beneath-image {
+    //
+  }
+  &.overlaying-image {
+    text-shadow: 0px 0px 4px black;
+  }
+
+}
+
+
+.show-image {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  overflow: hidden;
+  position:fixed;
+}
+
+.image-fullscreen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  overflow: auto;
+
+}
+
+
+
+
+.absolute-centered {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  overflow: auto;
+}
+
+//
+// .show-image {
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: black;
+//   overflow: hidden;
+//   position:fixed;
+// }
+//
+// .image-fullscreen {
+//   position: fixed;
+//   top: - $photo-info-panel-height;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   max-width: 100%;
+//   max-height: calc(100% - #{$photo-info-panel-height});
+//   margin: auto;
+//   overflow: auto;
+//
+// }
+//
+// .absolute-centered {
+//   position: fixed;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   max-width: 100%;
+//   max-height: 100%;
+//   margin: auto;
+//   overflow: auto;
+// }
+//
+// .image-info {
+//   position: fixed;
+//   bottom: 0;
+//   height: $photo-info-panel-height;
+//   max-width: 100%;
+//   max-height: $photo-info-panel-height;
+//   margin: 0 auto;
+//   overflow: auto;
+//   left: 0;
+//   right: 0;
+//   width: 100%;
+//   z-index: 100;
+//   color: white;
+//   text-align: center;
+//
+//   p {
+//     margin: 0;
+//     font-size: 14px;
+//   }
+
+
+
+  //
+  // position: fixed;
+  // bottom: 20px;
+  // right: 20px;
+  // width: 50px;
+  // height: 50px;
+  //
+  // max-width: 100%;
+  // max-height: 100%;
+
+  // &.beneath-image {
+  //   color: red;
+  // }
+  // &.overlaying-image {
+  //   color: green;
+  // }
+
+
+
+
+
+
+.spinner-white {
+  color: white;
+}

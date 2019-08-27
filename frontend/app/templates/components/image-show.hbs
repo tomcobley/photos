@@ -1,0 +1,22 @@
+<div id="image-show" class="show-image">
+
+  <div class="image-loading absolute-centered">
+    <div class="spinner-border spinner-white" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="image-loading-info">
+      <p>{{image.title}}</p>
+      <p>{{image.coords}}</p>
+    </div>
+
+  </div>
+
+
+  <img src={{image.src}} alt={{image.title}} class="image-fullscreen hidden">
+
+  <div class="image-info hidden">
+    <p>{{image.title}}</p>
+    <p>{{image.coords}}</p>
+  </div>
+
+</div>

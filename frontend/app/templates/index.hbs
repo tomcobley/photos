@@ -1,0 +1,6 @@
+<div class="thumbnail-section">
+
+  {{!-- Note: line below is condensed as whitespace between images cannot be allowed --}}
+  {{#each model as |contentItem|}}{{#if (if-cond contentItem.contentType "===" "divider")}}{{thumbnail-divider label=contentItem}}{{else if (if-cond contentItem.contentType "===" "image")}}<div class="image-thumbnail">{{image-thumbnail image=contentItem}}</div>{{/if}}{{/each}}
+
+</div>
