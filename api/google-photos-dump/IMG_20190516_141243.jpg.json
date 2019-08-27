@@ -1,0 +1,31 @@
+{
+  "title": "IMG_20190516_141243.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1566232480",
+    "formatted": "19 Aug 2019, 16:34:40 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1566232481",
+    "formatted": "19 Aug 2019, 16:34:41 UTC"
+  },
+  "geoData": {
+    "latitude": -1.4045666666666665,
+    "longitude": -78.2961611111111,
+    "altitude": 1452.84,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -1.4045666666666665,
+    "longitude": -78.2961611111111,
+    "altitude": 1452.84,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1558033963",
+    "formatted": "16 May 2019, 19:12:43 UTC"
+  }
+}

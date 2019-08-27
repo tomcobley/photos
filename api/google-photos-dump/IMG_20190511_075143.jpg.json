@@ -1,0 +1,31 @@
+{
+  "title": "IMG_20190511_075143.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1566232480",
+    "formatted": "19 Aug 2019, 16:34:40 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1566232481",
+    "formatted": "19 Aug 2019, 16:34:41 UTC"
+  },
+  "geoData": {
+    "latitude": -0.5037222222222222,
+    "longitude": -78.47126111111112,
+    "altitude": 3466.5,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": -0.5037222222222222,
+    "longitude": -78.47126111111112,
+    "altitude": 3466.5,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1557579103",
+    "formatted": "11 May 2019, 12:51:43 UTC"
+  }
+}

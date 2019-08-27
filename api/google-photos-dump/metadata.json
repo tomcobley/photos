@@ -1,0 +1,19 @@
+{
+  "albumData": {
+    "title": "Test",
+    "description": "",
+    "access": "protected",
+    "location": "",
+    "date": {
+      "timestamp": "1566231809",
+      "formatted": "19 Aug 2019, 16:23:29 UTC"
+    },
+    "geoData": {
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "altitude": 0.0,
+      "latitudeSpan": 0.0,
+      "longitudeSpan": 0.0
+    }
+  }
+}
