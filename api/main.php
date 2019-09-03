@@ -5,15 +5,17 @@ function pretty_var_dump($data) {
   highlight_string("<?php\n\$data =\n" . var_export($data, true) . ";\n?>");
 }
 
-$dirPath = "google-photos-dump/";
+$sourceDirPath = "google-photos-dump/";
+$destDirPath = "public/";
 
-$dirContents = scandir($dirPath);
+$sourceDirContents = scandir($sourceDirPath);
 
-// var_dump($dirContents);
+// var_dump($sourceDirContents);
 
 $images = array();
 
-foreach ($dirContents as $filename) {
+foreach ($sourceDirContents as $filename) {
+  // ignore album metadata file
   if ($filename === '.' || $filename === '..' || $filename === 'metadata.json') {continue;}
   if (strpos($filename, '.json') !== false) {
     // json file so skip
@@ -24,7 +26,6 @@ foreach ($dirContents as $filename) {
   $useEditedImage = false;
 
   echo "<br>$filename";
-
 
   $imageCode = str_replace('.jpg', '', $filename);
 
@@ -45,7 +46,7 @@ foreach ($dirContents as $filename) {
     // the image does not already exist in the array, so add it
     $images[$imageCode] = array('filename' => $filename);
     // retrieve the metadata from the relevant file and save to array \
-    $metaData = json_decode(file_get_contents($dirPath.$imageCode.'.jpg.json') , true);
+    $metaData = json_decode(file_get_contents($sourceDirPath.$imageCode.'.jpg.json') , true);
     $images[$imageCode]['geoData'] = $metaData['geoData'];
     $images[$imageCode]['timestamp'] = $metaData['photoTakenTime']['timestamp'];
 
@@ -55,5 +56,11 @@ foreach ($dirContents as $filename) {
 }
 
 pretty_var_dump($images);
+
+foreach ($images as $imageCode => $imageInfo) {
+  // make copy of image
+  copy($sourceDirPath.$imageInfo['filename'], $destDirPath.'images/'.$imageInfo['filename']);
+  // make thumbnail of image by cropping and compressing 
+}
 
  ?>

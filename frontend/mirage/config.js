@@ -149,6 +149,7 @@ export default function() {
     }
   ];
 
+
   // Return all content items when requested
   this.get('/content-items', function () {
     return { data: contentItems };

@@ -32,6 +32,7 @@ export default Route.extend({
           });
 
         } else {
+          // eslint-disable-next-line no-console
           console.warning("Unknown content type recieved: " + contentItem.get('contentType'));
         }
 

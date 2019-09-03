@@ -3,18 +3,16 @@
 
 require "functions.php";
 
-echo $_GET['type'];
-echo "<br>";
 
 $recordType = $_GET['type'];
 
 if (isset($_GET['allRecords']) && $_GET['allRecords']) {
   $getAllRecords = true;
-  echo "All records";
+  //echo "All records";
 } else {
   $getAllRecords = false;
   $recordId = $_GET['id'];
-  echo "Record with id " . $_GET['id'];
+  //echo "Record with id " . $_GET['id'];
 }
 
 // Retrieve json data and convert to php object
@@ -55,9 +53,7 @@ if ($getAllRecords) {
 // format output in accordance with JSON:API
 $outputFormatted = '{"data":'.$outputData.'}';
 
-echo "<br><br>";
 echo $outputFormatted;
-echo "<br><br>";
 
 //pretty_var_dump(json_decode($outputFormatted));
 

@@ -1,3 +1,6 @@
+# cheat sheet: http://borkweb.com/story/apache-rewrite-cheatsheet
+
+
 # Rewrite all valid data request urls to 'serve.php', so the relevant data can be returned
 RewriteEngine On
 
