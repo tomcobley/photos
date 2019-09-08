@@ -1,5 +1,7 @@
 <?php
 
+require_once "db/SQLiteClasses.php";
+
 // import fn-generate-thumbnails.php
 require "lib/fn-generate-thumbnails.php";
 // set thumbnail dimensions in px
@@ -32,6 +34,7 @@ foreach ($sourceDirContents as $filename) {
     $imageCode = str_replace('-edited', '', $imageCode);
   }
 
+
   if (array_key_exists($imageCode, $images) && $useEditedImage) {
     // image has already been added to array, but we need to replace it with the edited image
     $images[$imageCode]['filename'] = $filename;
@@ -54,51 +57,81 @@ foreach ($sourceDirContents as $filename) {
 }
 
 
+
 // read in existing data from images json file
-$imagesJSON = json_decode(file_get_contents('json/images.json') , true);
-$id = 0;
+//$imagesJSON = json_decode(file_get_contents('json/images.json') , true);
 
 foreach ($images as $imageCode => $imageInfo) {
-  // make copy of image
-  copy($sourceDirPath.$imageInfo['filename'], $destDirPath.'images/'.$imageInfo['filename']);
-  // make thumbnail of image by cropping and compressing
 
-  // create array to be converted to JSON and used by frontend (id is string)
-  $imagesJSON[] = array('type' => 'images',
-                        'id' => $id."",
-                        'attributes' => array('title' => 'Sample Title',
-                                              'coords' => 'Co-ords',
-                                              'src' => 'http://localhost:80/public/images/'.$imageInfo['filename'],
-                                              'thumbnail-src' => 'http://localhost:80/public/thumbnails/'.$imageInfo['filename']
-                                             )
-                        );
+
+  // check if image with this image code already exists in the database
+  $db = (new SQLiteConnection())->connect();
+
+  $record = (new SQLiteFindRecord($db)) -> search('images', 'image_code', $imageCode);
+
+  if ($record) {
+    // therefore image already exists in db, so find unique id of image
+    $imageId = intval($record['image_id']);
+
+
+  } else {
+    // image does not exist in database, so add it
+    $dbInsert = new SQLiteInsert($db);
+    $dbUpdate = new SQLiteUpdate($db);
+
+    $imageId = intval($dbInsert->insertImage($imageCode, "", "", "", ""));
+
+    // generate src and thumbnail src using id
+    $dataToUpdate = array(
+      'coords' => $imageInfo['geoData']['latitude'] . ', ' . $imageInfo['geoData']['longitude'],
+      'src' => 'http://localhost:80/public/images/'.$imageId,
+      'thumbnail_src' => 'http://localhost:80/public/thumbnails/'.$imageId,
+    );
+
+
+
+    // now add these srcs to the db
+    $dbUpdate->updateRecord('images', 'image_id', $imageId, $dataToUpdate);
+  }
+
+
+  // copy image to public folder
+  copy($sourceDirPath.$imageInfo['filename'], $destDirPath.'images/'.$imageId.'.jpg');
+
+  // make thumbnail of image by cropping and compressing
 
   // generate thumbnail for each image
   generateThumbnail($sourceDirPath.$imageInfo['filename'],
-                    $destDirPath.'thumbnails/'.$imageInfo['filename'],
+                    $destDirPath.'thumbnails/'.$imageId.'.jpg',
                     $thumbnailWidth,
                     $thumbnailHeight
                   );
 
 
-  // increment id counter
-  $id++;
-
 }
 
+//
+// $imagesJSONFilePath = "json/images.json";
+// $imagesJSONFile = fopen($imagesJSONFilePath, "w");
+// if (!$imagesJSONFile) {
+//   // error handling if file cannot be written to
+//   apiError("Failed to write to images JSON file with path " . $imagesJSONFilePath);
+// }
+// $imagesJSONConverted = json_encode($imagesJSON);
+// if (!$imagesJSONConverted) {
+//   // error handling if json did not encode correctly
+//   apiError("Failed to encode data to JSON " . $imagesJSONFilePath);
+// }
+// fwrite($imagesJSONFile, $imagesJSONConverted);
+// fclose($imagesJSONFile);
 
-$imagesJSONFilePath = "json/images.json";
-$imagesJSONFile = fopen($imagesJSONFilePath, "w");
-if (!$imagesJSONFile) {
-  // error handling if file cannot be written to
-  apiError("Failed to write to images JSON file with path " . $imagesJSONFilePath);
+
+// now empty source directory
+foreach ($sourceDirContents as $filename) {
+  // ignore non-files
+  if ($filename === '.' || $filename === '..') continue;
+
+  unlink($sourceDirPath.$filename);
 }
-$imagesJSONConverted = json_encode($imagesJSON);
-if (!$imagesJSONConverted) {
-  // error handling if json did not encode correctly
-  apiError("Failed to encode data to JSON " . $imagesJSONFilePath);
-}
-fwrite($imagesJSONFile, $imagesJSONConverted);
-fclose($imagesJSONFile);
 
 ?>
