@@ -1,0 +1,17 @@
+[
+  {
+    "type":"dividers",
+    "id":"1",
+    "attributes":{"city":"Cartagena","country":"Colombia"}
+  },
+  {
+    "type":"dividers",
+    "id":"2",
+    "attributes":{"city":"Medellin","country":"Colombia"}
+  },
+  {
+    "type":"dividers",
+    "id":"3",
+    "attributes":{"city":"Bogota","country":"Colombia"}
+  }
+]

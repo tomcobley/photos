@@ -50,15 +50,17 @@ export default Component.extend({
     });
 
     // set positon of infobar once image has laoded (and hide spinner)
-    imageContainer.imagesLoaded( function() {
-
-      imageContainer.find('.image-loading').hide();
-
-      imageContainer.find('.hidden').show();
-
-      positionInfoBar(imageContainer);
-
-    });
+    // imageContainer.imagesLoaded( function() {
+    //
+    //   imageContainer.find('.image-loading').hide();
+    //
+    //   imageContainer.find('.hidden').show();
+    //
+    //   positionInfoBar(imageContainer);
+    //
+    // });
+    // TODO: remove
+    imageContainer.find('.hidden').show();
 
 
 

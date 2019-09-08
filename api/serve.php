@@ -1,5 +1,8 @@
-
 <?php
+if (!(isset($_GET['noContentType']) && $_GET['noContentType'])) {
+  header('Content-Type: application:/vnd.api+json');
+}
+
 
 require "functions.php";
 
@@ -16,7 +19,7 @@ if (isset($_GET['allRecords']) && $_GET['allRecords']) {
 }
 
 // Retrieve json data and convert to php object
-$fileContents = file_get_contents($recordType."s.json");
+$fileContents = file_get_contents('json/'.$recordType."s.json");
 
 
 if ($getAllRecords) {
@@ -39,14 +42,14 @@ if ($getAllRecords) {
 
   // TODO: fix
   if (!$recordExists) {
-    die("Could not find record");
+    // TODO add 404 response if not found
+    die();
   }
 
-  // Note: even though only one record is being returned, JSON API specifies that
-  //    it must be wrapped in an array [] anyway
 
+  // TODO fix
   $recordEncoded = json_encode($records[$recordIndex]) or die('Error occured encoding json');
-  $outputData = "[" . $recordEncoded . "]";
+  $outputData = $recordEncoded;
 
 }
 

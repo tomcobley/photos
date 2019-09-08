@@ -1,0 +1,21 @@
+
+#edit-panels-wrapper {
+  width: 100%;
+
+}
+
+.item-edit-panel {
+  /* background-color: lightgrey; */
+  border: 1px solid grey;
+  margin: 10px;
+  padding: 10px;
+}
+
+.item-edit-panel .edit-mode-text-input {
+  width: 50%;
+  font-size: 16px;
+}
+
+.item-edit-panel .edit-mode-thumbnail {
+  width: 200px;
+}
