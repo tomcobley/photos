@@ -17,7 +17,8 @@ class SQLiteConnection {
      */
     public function connect() {
         if ($this->pdo == null) {
-            $this->pdo = new \PDO("sqlite:db/phpsqlite.db");
+          $this->pdo = new \PDO("sqlite:db/phpsqlite.db");
+          $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return $this->pdo;
     }
@@ -267,7 +268,6 @@ class SQLiteUpdate {
 
 class SQLiteFindRecord {
 
-
   /**
    * PDO object
    * @var \PDO
@@ -282,14 +282,25 @@ class SQLiteFindRecord {
       $this->pdo = $pdo;
   }
 
-  public function search($table, $searchColumn, $searchKey) {
+  public function search($table, $searchColumn=1, $searchKey=1) {
     // returns array of matching data, or false
+    // if no $searchColumn or $searchKey is defined, all data from table is returned
     if (gettype($searchKey) === "string") {
       $searchKey = '"'.$searchKey.'"';
     }
     $checkSql = "SELECT * FROM $table WHERE $searchColumn = $searchKey;";
-    $stmt = $this->pdo->query($checkSql);
-    return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    try {
+      $stmt = $this->pdo->query($checkSql);
+      while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+          $result[] = $row;
+      }
+      return $result;
+
+    } catch (\PDOException $e) {
+      error_log($e);
+      throw $e;
+    }
 
   }
 }

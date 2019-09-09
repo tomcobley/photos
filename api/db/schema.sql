@@ -32,3 +32,25 @@ CREATE TABLE images (
   src TEXT NOT NULL,
   thumbnail_src TEXT NOT NULL
 );
+
+ALTER TABLE images
+ADD image_timestamp DATETIME;
+
+
+CREATE TABLE dividers (
+  divider_id INTEGER PRIMARY KEY,
+  city VARCHAR (255),
+  country VARCHAR (255)
+);
+
+INSERT INTO dividers
+(
+  divider_id,
+  city,
+  country
+)
+VALUES (
+  1,
+  "Sao Paulo",
+  "Brasil"
+);
