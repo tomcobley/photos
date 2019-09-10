@@ -33,7 +33,7 @@ $checker = new SQLiteFindRecord($db);
 
 
 
-var_dump ($checker->search('images', 'image_code', 'IMG_20190511_075143'));
+//var_dump ($checker->search('images', 'image_code', 'IMG_20190511_075143'));
 // if (!($stmt->fetch(\PDO::FETCH_ASSOC))) {
 //   $uniqueIdFound = true;
 // }

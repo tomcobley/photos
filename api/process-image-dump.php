@@ -1,6 +1,7 @@
 <?php
 
 require_once "db/SQLiteClasses.php";
+require_once "functions.php";
 
 // import fn-generate-thumbnails.php
 require "lib/fn-generate-thumbnails.php";
@@ -55,22 +56,26 @@ foreach ($sourceDirContents as $filename) {
 }
 
 
+// connect to db
+$db = (new SQLiteConnection())->connect();
+$findRecord = new SQLiteFindRecord($db);
+$dbInsert = new SQLiteInsert($db);
+$dbUpdate = new SQLiteUpdate($db);
+
+
 foreach ($images as $imageCode => $imageInfo) {
 
-
   // check if image with this image code already exists in the database
-  $db = (new SQLiteConnection())->connect();
 
-  $record = (new SQLiteFindRecord($db)) -> search('images', 'image_code', $imageCode);
+  $record = $findRecord->search('images', 'default', 'image_code', $imageCode);
+  pretty_var_dump($record);
 
   if ($record) {
     // therefore image already exists in db, so find unique id of image
-    $imageId = intval($record['image_id']);
+    $imageId = intval($record[0]['image_id']);
 
   } else {
     // image does not exist in database, so add it
-    $dbInsert = new SQLiteInsert($db);
-    $dbUpdate = new SQLiteUpdate($db);
 
     // add empty record to db and store returned ID value
     $imageId = intval($dbInsert->insertImage($imageCode, "", "", "", ""));
@@ -80,12 +85,25 @@ foreach ($images as $imageCode => $imageInfo) {
       'coords' => number_format($imageInfo['geoData']['latitude'], 4) . ', ' . number_format($imageInfo['geoData']['longitude'], 4),
       'altitude' => number_format($imageInfo['geoData']['altitude'], 1),
       'image_timestamp' => $imageInfo['timestamp'],
-      'src' => 'http://localhost:80/public/images/'.$imageId,
-      'thumbnail_src' => 'http://localhost:80/public/thumbnails/'.$imageId,
+      'src' => 'http://localhost:80/public/images/'.$imageId.'.jpg',
+      'thumbnail_src' => 'http://localhost:80/public/thumbnails/'.$imageId.'.jpg',
     );
 
     // now add these srcs to the record in the db
     $dbUpdate->updateRecord('images', 'image_id', $imageId, $dataToUpdate);
+  }
+
+
+  // check if image with this id already exists in content_items table of this database
+  $record = $findRecord->search('content_items', 'default', 'image_id', $imageId);
+  //pretty_var_dump($record);
+
+  if (!$record) {
+    // image does not exist in content_items table, so add it
+
+    // add record to db
+    $dbInsert->insertContentItem('image', $imageId, $imageInfo['timestamp']);
+
   }
 
 

@@ -1,3 +1,8 @@
+<?php
+session_start();
+require "auth/check_auth.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +23,10 @@
 
 </head>
 
+<body>
+  <input id="auth_token" name="auth_token" type="hidden" value="<?= $_SESSION['auth_token'] ?>">
+  
+  <div id="edit-panels-wrapper">
+  </div>
 
-<div id="edit-panels-wrapper">
-
-</div>
+</body>

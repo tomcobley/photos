@@ -17,10 +17,24 @@ INSERT INTO content_items
 VALUES (
   0,
   "image",
-  4,
-  3,
+  0,
+  2570015846,
   NULL
 );
+INSERT INTO content_items
+(
+  content_item_id,
+  content_type,
+  position,
+  image_id,
+  divider_id
+)
+VALUES (
+  5,
+  "divider",
+  3,
+  NULL,
+  1);
 
 SELECT * FROM content_items;
 
@@ -54,3 +68,18 @@ VALUES (
   "Sao Paulo",
   "Brasil"
 );
+
+
+update images set src = "http://localhost:80/public/images/9606362007.jpg",
+  thumbnail_src = "http://localhost:80/public/thumbnails/9606362007.jpg"
+  where src = "http://localhost:80/public/images/9606362007";
+
+
+CREATE TABLE images_ (
+image_id INTEGER PRIMARY KEY,
+image_code VARCHAR (255),
+title VARCHAR (255),
+coords VARCHAR (255),
+src TEXT NOT NULL,
+thumbnail_src TEXT NOT NULL
+, altitude VARCHAR (255), image_timestamp DATETIME);

@@ -30,10 +30,12 @@ if ($recordType === 'content-item') {
   $recordTableName = 'content_items';
   $recordIdColumnName = 'content_item_id';
   $recordTypePlural = 'content-items';
+  $orderQuery = 'ORDER BY timestamp ASC';
 
 } else if ($recordType === 'image' || $recordType === 'divider') {
   $recordTableName = $recordTypePlural = $recordType .'s';
   $recordIdColumnName = $recordType . '_id';
+  $orderQuery = "default";
 
 } else {
   // invalid type
@@ -45,11 +47,11 @@ if ($recordType === 'content-item') {
 
 if ($getAllRecords) {
   // get all records from db
-  $dataArray = $findRecord -> search($recordTableName);
+  $dataArray = $findRecord -> search($recordTableName, $orderQuery);
 
 } else {
   // get requested record from db
-  $dataArray = $findRecord -> search($recordTableName, $recordIdColumnName, $recordId);
+  $dataArray = $findRecord -> search($recordTableName, $orderQuery, $recordIdColumnName, $recordId);
 }
 
 // pretty_var_dump($dataArray);
@@ -64,9 +66,10 @@ $attributesToReturn = array(
 
   'content-item' => array(
     'content-type' => 'content_type',
-    'position' => 'position',
+    'timestamp' => 'timestamp',
     'divider-id' => 'divider_id',
-    'image-id' => 'image_id'
+    'image-id' => 'image_id',
+    'hidden' => 'hidden'
   ),
   'image' => array(
     'title' => 'title',

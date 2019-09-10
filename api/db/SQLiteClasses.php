@@ -26,68 +26,6 @@ class SQLiteConnection {
 }
 
 
-/**
- * SQLite Create Table Demo
- */
-class SQLiteCreateTable {
-
-    /**
-     * PDO object
-     * @var \PDO
-     */
-    private $pdo;
-
-    /**
-     * connect to the SQLite database
-     */
-    public function __construct($pdo) {
-        $this->pdo = $pdo;
-    }
-
-    /**
-     * create tables
-     */
-    public function createTables() {
-        $commands = ['CREATE TABLE IF NOT EXISTS projects (
-                        project_id   INTEGER PRIMARY KEY,
-                        project_name TEXT NOT NULL
-                      )',
-            'CREATE TABLE IF NOT EXISTS tasks (
-                    task_id INTEGER PRIMARY KEY,
-                    task_name  VARCHAR (255) NOT NULL,
-                    completed  INTEGER NOT NULL,
-                    start_date TEXT,
-                    completed_date TEXT,
-                    project_id VARCHAR (255),
-                    FOREIGN KEY (project_id)
-                    REFERENCES projects(project_id) ON UPDATE CASCADE
-                                                    ON DELETE CASCADE)'];
-        // execute the sql commands to create new tables
-        foreach ($commands as $command) {
-            $this->pdo->exec($command);
-        }
-    }
-
-    /**
-     * get the table list in the database
-     */
-    public function getTableList() {
-
-        $stmt = $this->pdo->query("SELECT name
-                                   FROM sqlite_master
-                                   WHERE type = 'table'
-                                   ORDER BY name");
-        $tables = [];
-        while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
-            $tables[] = $row['name'];
-        }
-
-        return $tables;
-    }
-
-}
-
-
 class SQLiteInsert {
 
     /**
@@ -104,76 +42,36 @@ class SQLiteInsert {
         $this->pdo = $pdo;
     }
 
-    /**
-     * Insert a new project into the projects table
-     * @param string $projectName
-     * @return the id of the new project
-     */
-    public function insertProject($projectName) {
-        $sql = 'INSERT INTO projects(project_name) VALUES(:project_name)';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':project_name', $projectName);
-        $stmt->execute();
-
-        return $this->pdo->lastInsertId();
-    }
-
-    /**
-     * Insert a new task into the tasks table
-     * @param type $taskName
-     * @param type $startDate
-     * @param type $completedDate
-     * @param type $completed
-     * @param type $projectId
-     * @return int id of the inserted task
-     */
-    public function insertTask($taskName, $startDate, $completedDate, $completed, $projectId) {
-        $sql = 'INSERT INTO tasks(task_name,start_date,completed_date,completed,project_id) '
-                . 'VALUES(:task_name,:start_date,:completed_date,:completed,:project_id)';
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
-            ':task_name' => $taskName,
-            ':start_date' => $startDate,
-            ':completed_date' => $completedDate,
-            ':completed' => $completed,
-            ':project_id' => $projectId,
-        ]);
-
-        return $this->pdo->lastInsertId();
-    }
 
     /**
      * Insert a new content item into the content_items table
      */
-    public function insertContentItem($contentType, $postion, $foreignId) {
+    public function insertContentItem($contentType, $foreignId, $timestamp) {
 
       if ($contentType === 'image') {
         $imageId = $foreignId;
-        $dividerId = "NULL";
+        $dividerId = NULL;
       } else {
-        $imageId = "NULL";
+        $imageId = NULL;
         $dividerId = $foreignId;
       }
 
-      $sql = 'INSERT INTO content_items (content_type, position, image_id, divider_id)
-              VALUES (:content_type, :position, :image_id, :divider_id)';
+      $sql = 'INSERT INTO content_items (content_type, image_id, divider_id, hidden, timestamp)
+              VALUES (:content_type, :image_id, :divider_id, :hidden, :timestamp)';
 
       $stmt = $this->pdo->prepare($sql);
       $stmt->execute([
-          ':content_type' => "image",
-          ':position' => $postion,
+          ':content_type' => $contentType,
           ':image_id' => $imageId,
-          ':divider_id' => $dividerId
+          ':divider_id' => $dividerId,
+          ':hidden' => 0,
+          ':timestamp' => $timestamp
       ]);
 
       return $this->pdo->lastInsertId();
     }
 
 
-    /**
-     * Insert a new image item into the images table
-     */
     public function insertImage($imageCode, $title, $coords, $src, $thumbnailSrc) {
 
       // generate random ID for image (and check random ID doesn't already exist)
@@ -203,24 +101,23 @@ class SQLiteInsert {
       return $this->pdo->lastInsertId();
     }
 
+
+    public function insertDivider($city = "", $country = "") {
+
+      $sql = 'INSERT INTO dividers (city, country)
+              VALUES (:city, :country)';
+
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute([
+          ':city' => $city,
+          ':country' => $country
+      ]);
+
+      return $this->pdo->lastInsertId();
+    }
+
 }
 
-//
-// INSERT INTO content_items
-// (
-//   content_item_id,
-//   content_type,
-//   position,
-//   image_id,
-//   divider_id
-// )
-// VALUES (
-//   0,
-//   "image",
-//   4,
-//   3,
-//   NULL
-// );
 
 
 class SQLiteUpdate {
@@ -257,7 +154,7 @@ class SQLiteUpdate {
       $key = '"'.$key.'"';
     }
     $sql .= "WHERE $key_column = $key;";
-    echo $sql;
+
     $stmt = $this->pdo->prepare($sql);
 
     $stmt->execute();
@@ -282,16 +179,22 @@ class SQLiteFindRecord {
       $this->pdo = $pdo;
   }
 
-  public function search($table, $searchColumn=1, $searchKey=1) {
+  public function search($table, $orderQuery, $searchColumn=1, $searchKey=1) {
     // returns array of matching data, or false
     // if no $searchColumn or $searchKey is defined, all data from table is returned
+
+    if ($orderQuery === "default") {
+      $orderQuery = "";
+    }
+
     if (gettype($searchKey) === "string") {
       $searchKey = '"'.$searchKey.'"';
     }
-    $checkSql = "SELECT * FROM $table WHERE $searchColumn = $searchKey;";
+    $checkSql = "SELECT * FROM $table WHERE $searchColumn = $searchKey " . $orderQuery . ";" ;
 
     try {
       $stmt = $this->pdo->query($checkSql);
+      $result = [];
       while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
           $result[] = $row;
       }
