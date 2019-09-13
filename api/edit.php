@@ -1,5 +1,5 @@
 <?php
-session_start();
+// check auth
 require "auth/check_auth.php";
 ?>
 
@@ -18,14 +18,14 @@ require "auth/check_auth.php";
   <script src="vendor/jquery/jquery.min.js" charset="utf-8"></script>
 
   <link href="style/edit.css" rel="stylesheet">
-  <script src="edit.js" charset="utf-8"></script>
+  <script src="lib/edit.js" charset="utf-8"></script>
 
 
 </head>
 
 <body>
   <input id="auth_token" name="auth_token" type="hidden" value="<?= $_SESSION['auth_token'] ?>">
-  
+
   <div id="edit-panels-wrapper">
   </div>
 

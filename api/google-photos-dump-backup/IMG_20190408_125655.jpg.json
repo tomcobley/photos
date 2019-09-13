@@ -1,0 +1,31 @@
+{
+  "title": "IMG_20190408_125655.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1568270821",
+    "formatted": "12 Sep 2019, 06:47:01 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1568271157",
+    "formatted": "12 Sep 2019, 06:52:37 UTC"
+  },
+  "geoData": {
+    "latitude": 6.220005555555556,
+    "longitude": -75.17926944444444,
+    "altitude": 2151.34,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 6.220005555555556,
+    "longitude": -75.17926944444444,
+    "altitude": 2151.34,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1554746215",
+    "formatted": "8 Apr 2019, 17:56:55 UTC"
+  }
+}

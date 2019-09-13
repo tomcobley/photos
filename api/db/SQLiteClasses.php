@@ -15,9 +15,9 @@ class SQLiteConnection {
      * return in instance of the PDO object that connects to the SQLite database
      * @return \PDO
      */
-    public function connect() {
+    public function connect($dbPath = "db/phpsqlite.db") {
         if ($this->pdo == null) {
-          $this->pdo = new \PDO("sqlite:db/phpsqlite.db");
+          $this->pdo = new \PDO("sqlite:".$dbPath);
           $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return $this->pdo;

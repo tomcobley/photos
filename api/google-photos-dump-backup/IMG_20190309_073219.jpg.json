@@ -1,0 +1,31 @@
+{
+  "title": "IMG_20190309_073219.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1568270821",
+    "formatted": "12 Sep 2019, 06:47:01 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1568271229",
+    "formatted": "12 Sep 2019, 06:53:49 UTC"
+  },
+  "geoData": {
+    "latitude": 11.116113888888888,
+    "longitude": -73.86180555555555,
+    "altitude": 690.49,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 11.116113888888888,
+    "longitude": -73.86180555555555,
+    "altitude": 690.49,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1552134739",
+    "formatted": "9 Mar 2019, 12:32:19 UTC"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "title": "IMG_20190331_123257.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1568270821",
+    "formatted": "12 Sep 2019, 06:47:01 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1568271157",
+    "formatted": "12 Sep 2019, 06:52:37 UTC"
+  },
+  "geoData": {
+    "latitude": 6.250375,
+    "longitude": -75.62159999999999,
+    "altitude": -0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 6.250375,
+    "longitude": -75.62159999999999,
+    "altitude": -0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1554053577",
+    "formatted": "31 Mar 2019, 17:32:57 UTC"
+  }
+}

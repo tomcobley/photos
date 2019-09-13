@@ -1,0 +1,4 @@
+# Deny all requests. Only server can access these files
+
+Order deny,allow
+Deny from all

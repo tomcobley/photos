@@ -1,9 +1,62 @@
 <?php
-if (isset($_GET['redirect'])) {
-  $redirect_uri = $_GET['redirect'];
+session_start();
+
+$default_redirect = 'edit.php';
+$permitted_access_keys = ['master83012?!', 'jk3h42jh242kjh5HK535SKJHFK23HsfSLpl22zm56sx'];
+
+if (isset($_POST['access_key'])) {
+  // access_key in post so check it
+  $access_key = htmlspecialchars($_POST['access_key']);
+
+  if (isset($_POST['redirect_uri'])) {
+    $redirect_uri = htmlspecialchars($_POST['redirect_uri']);
+  } else {
+    $redirect_uri = $default_redirect;
+  }
+
+  if (!$redirect_uri) {
+    $redirect_uri = $default_redirect;
+  }
+
+  if (in_array($access_key, $permitted_access_keys)) {
+    // auth successful
+    $_SESSION['auth'] = true;
+    require "auth/gen_token.php";
+
+    header("Location: ".$redirect_uri);
+
+  } else {
+    $_SESSION['auth'] = false;
+    // we are already on auth.php, so give an error message and user can try again
+    $error_message = "Access Key not recognised";
+  }
+
 } else {
-  $redirect_uri = "";
+
+  // user must have just arrived on this page, so prepare for them to enter access key
+  //    or redirect them if they are already authenticated
+
+  if (isset($_GET['redirect']) && $_GET['redirect'] !== 'auth.php') {
+    $redirect_uri = $_GET['redirect'];
+  } else {
+    $redirect_uri = $default_redirect;
+  }
+
+
+  if (isset($_SESSION['auth']) && $_SESSION['auth'] === true ) {
+    // user is already authenticated so they don't need to reauthenticate
+
+    // check they have an auth_token set in session
+    if (!$_SESSION['auth_token']) {
+      require "auth/gen_token.php";
+    }
+
+    header("Location: ".$redirect_uri);
+    exit();
+  }
+
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -14,26 +67,26 @@ if (isset($_GET['redirect'])) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Edit</title>
+  <title>Authentication</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <script src="vendor/jquery/jquery.min.js" charset="utf-8"></script>
 
   <link href="style/auth.css" rel="stylesheet">
-  <link href="style/edit.css" rel="stylesheet">
-  <script src="edit.js" charset="utf-8"></script>
-
 
 </head>
 
 <body>
-  <form method="post" action="auth/process_auth.php">
+  <form method="post">
+    <?php //form posts to self  ?>
     <div class="form-group">
       <label for="exampleInputPassword1">Enter Access Key</label>
       <input type="password" name="access_key" class="form-control">
     </div>
     <input name="redirect_uri" type="hidden" class="form-control" value="<?= $redirect_uri ?>">
     <button type="submit" class="btn btn-primary">Submit</button>
+
+    <?php if (isset($error_message)) echo '<p class="error">'.$error_message.'</p>'; ?>
   </form>
 </body>

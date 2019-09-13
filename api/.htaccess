@@ -1,45 +1,10 @@
 # cheat sheet: http://borkweb.com/story/apache-rewrite-cheatsheet
 
+#RewriteEngine On
 
-# Rewrite all valid data request urls to 'serve.php', so the relevant data can be returned
-RewriteEngine On
-
-
-### Content Items (general data used by ember) ###
-
-## All content-items:
-#     Rewrite any url matching "content-items/" (with nothing following the / )
-#     to "serve.php?type=content-item&allRecords=1"
-RewriteRule ^content-items/?$ serve.php?type=content-item&allRecords=1 [L,QSA]
-
-## Single content-item specified by id:
-#     Rewrite any url matching "content-items/[*]" where [*] is one or more numerical digits
-#     to "serve.php?type=content-item&id=[*]"
-RewriteRule ^content-items/(\d+)$ serve.php?type=content-item&id=$1 [L,QSA]
-
-
-### Images ###
-
-## All images:
-#     Rewrite any url matching "images/" (with nothing following the / )
-#     to "serve.php?type=image&allRecords=1"
-RewriteRule ^images/?$ serve.php?type=image&allRecords=1 [L,QSA]
-
-## Single image specified by id:
-#     Rewrite any url matching "images/[*]" where [*] is one or more numerical digits
-#     to "serve.php?type=image&id=[*]"
-RewriteRule ^images/(\d+)$ serve.php?type=image&id=$1 [L,QSA]
-
-
-### Dividers ###
-
-## All dividers:
-#     Rewrite any url matching "dividers/" (with nothing following the / )
-#     to "serve.php?type=divider&allRecords=1"
-RewriteRule ^dividers/?$ serve.php?type=divider&allRecords=1 [L,QSA]
-
-
-## Single divider specified by id:
-#     Rewrite any url matching "dividers/[*]" where [*] is one or more numerical digits
-#     to "serve.php?type=divider&id=[*]"
-RewriteRule ^dividers/(\d+)$ serve.php?type=divider&id=$1 [L,QSA]
+# Whitelist directories:
+#   Allow any requests for to be accepted (don't redirect to auth page)
+#   as frontend will make requests here
+#RewriteRule ^data/ - [L]
+#RewriteRule ^vendor/ - [L]
+#RewriteRule ^style/ - [L]

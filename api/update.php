@@ -17,7 +17,7 @@ function giveErrorResponse($code, $message, $redirect=false) {
 }
 
 
-// before doing anything else, check user is authed
+// before doing anything else, check user's request contains auth token 
 // if not, redirect to auth page
 session_start();
 if ( !( isset($_POST['auth_token']) && $_POST['auth_token'] === $_SESSION['auth_token'] ) ) {

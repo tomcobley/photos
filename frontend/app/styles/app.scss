@@ -1,5 +1,6 @@
 @import "ember-cli-bootstrap-4/bootstrap";
 @import "variables.scss";
+@import "reset.css";
 
 
 // Note on media queries (from bootstrap):
@@ -19,6 +20,10 @@
 // xl - Extra large devices (large desktops, 1200px and up)
 // @media (min-width: 1200px) { ... }
 
+
+body {
+  font-family: 'Roboto Mono', sans-serif;
+}
 
 .thumbnail-section {
   width: 100%;
@@ -49,9 +54,9 @@ div.image-thumbnail img {
 
 .divider {
   width: 100%;
-  background-color: rgb(245,245,245);
+  background-color: $divider-background-color;
   color: $divider-primary-color;
-  padding: 15px 10px 5px 10px;
+  padding: 40px 10px 5px 10px;
   margin: 1px 0;
   font-size: 14px;
 
@@ -62,13 +67,13 @@ div.image-thumbnail img {
   }
 
   .primary {
-    font-weight: $divider-primary-font-weight;
+    font-weight: $primary-font-weight;
   }
 
   .secondary {
     color: rgb(150,150,150);
     text-align: right;
-    font-weight: $divider-secondary-font-weight;
+    font-weight: $secondary-font-weight;
 
   }
 }
@@ -106,9 +111,17 @@ div.image-thumbnail img {
 
 .image-info, .image-loading-info {
   color: white;
-  p {
+  p, a {
     margin: 0;
     font-size: 16px;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  a:hover {
+    color: white;
+    text-decoration: underline;
   }
 }
 
@@ -143,6 +156,7 @@ div.image-thumbnail img {
   background-color: black;
   overflow: hidden;
   position:fixed;
+
 }
 
 .image-fullscreen {

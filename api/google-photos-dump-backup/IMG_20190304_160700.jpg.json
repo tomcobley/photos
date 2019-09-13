@@ -1,0 +1,31 @@
+{
+  "title": "Snapchat-1621404911.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1568270821",
+    "formatted": "12 Sep 2019, 06:47:01 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1568271432",
+    "formatted": "12 Sep 2019, 06:57:12 UTC"
+  },
+  "geoData": {
+    "latitude": 11.0106913,
+    "longitude": -74.7919867,
+    "altitude": 37.5,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 11.0106913,
+    "longitude": -74.7919867,
+    "altitude": 37.5,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1551733660",
+    "formatted": "4 Mar 2019, 21:07:40 UTC"
+  }
+}

@@ -1,3 +1,12 @@
+
+FORMAT
+
+.headers on
+.mode column
+
+
+
+
 CREATE TABLE content_items (
   content_item_id INTEGER PRIMARY KEY,
   content_type TEXT NOT NULL,
@@ -83,3 +92,6 @@ coords VARCHAR (255),
 src TEXT NOT NULL,
 thumbnail_src TEXT NOT NULL
 , altitude VARCHAR (255), image_timestamp DATETIME);
+
+
+// REMOVE COLUMN FROM TABLE

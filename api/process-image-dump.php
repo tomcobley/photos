@@ -1,4 +1,9 @@
 <?php
+// check auth
+require "auth/check_auth.php";
+
+// remove execution time limit to allow long processing times
+set_time_limit(0);
 
 require_once "db/SQLiteClasses.php";
 require_once "functions.php";
@@ -13,6 +18,10 @@ $sourceDirPath = "google-photos-dump/";
 $destDirPath = "../public/";
 
 $sourceDirContents = scandir($sourceDirPath);
+
+if (count($sourceDirContents) === 2) {
+  echo "<br>No files found in source directory ( apart from '.' and '..' ).";
+}
 
 
 $images = array();
@@ -62,13 +71,16 @@ $findRecord = new SQLiteFindRecord($db);
 $dbInsert = new SQLiteInsert($db);
 $dbUpdate = new SQLiteUpdate($db);
 
+$imageCount = count($images);
+$currentImageCounter = 1;
+
 
 foreach ($images as $imageCode => $imageInfo) {
 
   // check if image with this image code already exists in the database
 
   $record = $findRecord->search('images', 'default', 'image_code', $imageCode);
-  pretty_var_dump($record);
+  //pretty_var_dump($record);
 
   if ($record) {
     // therefore image already exists in db, so find unique id of image
@@ -119,6 +131,8 @@ foreach ($images as $imageCode => $imageInfo) {
                     $thumbnailHeight
                    );
 
+  echo "<br>Processed image $currentImageCounter of $imageCount. ";
+  $currentImageCounter++;
 }
 
 

@@ -1,0 +1,31 @@
+{
+  "title": "IMG_20190412_124635.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1568270821",
+    "formatted": "12 Sep 2019, 06:47:01 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1568271157",
+    "formatted": "12 Sep 2019, 06:52:37 UTC"
+  },
+  "geoData": {
+    "latitude": 4.636780555555555,
+    "longitude": -75.47637222222222,
+    "altitude": 2643.53,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 4.636780555555555,
+    "longitude": -75.47637222222222,
+    "altitude": 2643.53,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1555091195",
+    "formatted": "12 Apr 2019, 17:46:35 UTC"
+  }
+}

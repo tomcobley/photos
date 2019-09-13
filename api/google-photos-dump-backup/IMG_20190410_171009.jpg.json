@@ -1,0 +1,31 @@
+{
+  "title": "IMG_20190410_171009.jpg",
+  "description": "",
+  "imageViews": "0",
+  "creationTime": {
+    "timestamp": "1568270821",
+    "formatted": "12 Sep 2019, 06:47:01 UTC"
+  },
+  "modificationTime": {
+    "timestamp": "1568271157",
+    "formatted": "12 Sep 2019, 06:52:37 UTC"
+  },
+  "geoData": {
+    "latitude": 4.637302777777777,
+    "longitude": -75.5705111111111,
+    "altitude": 2019.9,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 4.637302777777777,
+    "longitude": -75.5705111111111,
+    "altitude": 2019.9,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "photoTakenTime": {
+    "timestamp": "1554934209",
+    "formatted": "10 Apr 2019, 22:10:09 UTC"
+  }
+}

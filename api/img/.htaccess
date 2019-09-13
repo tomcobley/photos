@@ -1,0 +1,10 @@
+# cheat sheet: http://borkweb.com/story/apache-rewrite-cheatsheet
+
+# Rewrite all valid image request urls to 'serve.php', so the relevant image can be returned
+RewriteEngine On
+
+# Thumbnails
+RewriteRule ^thumbnails/(\d+).jpg$ serve.php?type=thumbnail&id=$1 [L,QSA]
+
+# Images
+RewriteRule ^images/(\d+).jpg$ serve.php?type=image&id=$1 [L,QSA]
