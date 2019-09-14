@@ -213,13 +213,13 @@ function renderPage() {
   $('#edit-panels-wrapper').empty();
 
   $.getJSON(
-    "http://localhost:80/api/content-items?includeHidden=1",
+    "http://localhost:80/api/data/content-items?includeHidden=1",
     function(contentItems) {
       $.getJSON(
-        "http://localhost:80/api/dividers",
+        "http://localhost:80/api/data/dividers",
         function(dividers) {
           $.getJSON(
-            "http://localhost:80/api/images",
+            "http://localhost:80/api/data/images",
             function(images) {
               // all resources are now loaded
 
