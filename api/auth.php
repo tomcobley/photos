@@ -1,8 +1,26 @@
 <?php
+
+/*
+Auth info:
+  * Auth types: edit and view
+
+Edit info:
+  * One of the permitted access keys must be provided to obtain access to edit page
+  * At the start of each session, a random token (32 chars) will be generated and saved in the
+    users session ('auth_token'). Every interaction made with the api will require this token
+
+View info:
+  * View access key stored in url as query parameter
+  * At the start of each session, a random token (16 chars) will be generated and saved in
+    the users session ('view_token'). Every interaction made with the api will require this token
+  */
+
 session_start();
 
 $default_redirect = 'edit.php';
-$permitted_access_keys = ['master83012?!', 'jk3h42jh242kjh5HK535SKJHFK23HsfSLpl22zm56sx'];
+$permitted_auth_keys = ['master83012?!', 'jk3h42jh242kjh5HK535SKJHFK23HsfSLpl22zm56sx'];
+
+$permitted_view_keys = ['passw0rd'];
 
 if (isset($_POST['access_key'])) {
   // access_key in post so check it
@@ -18,10 +36,13 @@ if (isset($_POST['access_key'])) {
     $redirect_uri = $default_redirect;
   }
 
-  if (in_array($access_key, $permitted_access_keys)) {
+  if (in_array($access_key, $permitted_auth_keys)) {
     // auth successful
-    $_SESSION['auth'] = true;
+    $_SESSION['auth_edit'] = true;
     require "auth/gen_token.php";
+    // also grant view access
+    $_SESSION['auth_view'] = true;
+    require "auth/gen_view_token.php";
 
     header("Location: ".$redirect_uri);
 
@@ -30,6 +51,11 @@ if (isset($_POST['access_key'])) {
     // we are already on auth.php, so give an error message and user can try again
     $error_message = "Access Key not recognised";
   }
+
+} else if (isset($_GET['key']) {
+  // view key is set in url
+  $view_key = $_GET['key'] // TODO continue
+
 
 } else {
 
