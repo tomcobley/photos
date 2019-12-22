@@ -208,6 +208,24 @@ function addEventListeners() {
 }
 
 
+function movePanel(panel, direction) {
+  if (direction === 'up') {
+    var newTimestamp = Number( panel.prev().prev().find('input[name=timestamp]').val() ) - 1;
+  } else {
+    var newTimestamp = Number( panel.next().next().find('input[name=timestamp]').val() ) + 1;
+  }
+  // fire event listener
+  panel.find('input[name=timestamp]').val(newTimestamp).change();
+}
+
+
+function insertNewDivider( locationElement ) {
+  // make request to backend then refresh page
+  var timestamp = Number( locationElement.next().find('input[name=timestamp]').val() ) - 1;
+  insertToApi( {elementType: 'divider', timestamp: timestamp}, true );
+}
+
+
 function renderPage() {
   // clear page to begin with
   $('#edit-panels-wrapper').empty();
@@ -216,15 +234,16 @@ function renderPage() {
     "http://localhost:80/api/data/content-items?includeHidden=1",
     function(contentItems) {
       $.getJSON(
-        "http://localhost:80/api/data/dividers",
+        "http://localhost:80/api/data/dividers?includeHidden=1",
         function(dividers) {
           $.getJSON(
-            "http://localhost:80/api/data/images",
+            "http://localhost:80/api/data/images?includeHidden=1",
             function(images) {
               // all resources are now loaded
 
-              // note that contentItems is ordered by `timestamp` (from api)
               addInsertDividerButton();
+
+              // note that contentItems is ordered by `timestamp` (from api)
               $(contentItems.data).each(function(){
                 addEditPanel(this, images.data, dividers.data);
                 addInsertDividerButton();
@@ -246,30 +265,9 @@ function renderPage() {
 }
 
 
-function movePanel(panel, direction) {
-
-  if (direction === 'up') {
-    var newTimestamp = Number( panel.prev().prev().find('input[name=timestamp]').val() ) - 1;
-  } else {
-    var newTimestamp = Number( panel.next().next().find('input[name=timestamp]').val() ) + 1;
-  }
-  // fire event listener
-  panel.find('input[name=timestamp]').val(newTimestamp).change();
-
-}
-
-
-function insertNewDivider( locationElement ) {
-  // make request to backend then refresh page
-  var timestamp = Number( locationElement.next().find('input[name=timestamp]').val() ) - 1;
-  insertToApi( {elementType: 'divider', timestamp: timestamp}, true );
-
-}
 
 
 
 $(document).ready(function() {
   renderPage();
-
-
 });
