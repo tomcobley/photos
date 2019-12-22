@@ -5,4 +5,5 @@ export default DS.Model.extend({
   coords: DS.attr(),
   src: DS.attr(),
   thumbnailSrc: DS.attr(),
+  orderEphemeral: DS.attr()
 });
