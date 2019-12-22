@@ -9,8 +9,6 @@ function give400() {
   die();
 }
 
-echo file_get_contents('img/file.txt');
-
 $pathToImages = 'private/';
 
 // all image requests are interpreted by htaccess and sent to this file so the
