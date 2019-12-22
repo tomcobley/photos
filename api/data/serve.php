@@ -1,4 +1,5 @@
 <?php
+require "../functions.php";
 
 function give404() {
   http_response_code(404);
@@ -11,9 +12,7 @@ if (!(isset($_GET['noContentType']) && $_GET['noContentType'])) {
 
 // Note: currently, hiding records only hides them when all record are requested.
 //    IF a record is requested by id, it will still be returned, even if hidden=1
-// Also note that this clause is only relevant for requests for 'content-item's.
-//    Requests for all images or dividers will always return ALL records, even if hidden
-//    due to db structure.
+// This is true for all item types
 if (isset($_GET['includeHidden']) && $_GET['includeHidden']) {
   $includeHidden = true;
 } else {
@@ -21,17 +20,12 @@ if (isset($_GET['includeHidden']) && $_GET['includeHidden']) {
 }
 
 require "../db/SQLiteClasses.php";
-// check if image with this image code already exists in the database
-// note that path specified in connect is relative to the current php working dir
 $db = (new SQLiteConnection())->connect('../db/phpsqlite.db');
 $findRecord = new SQLiteFindRecord($db);
-
-require "../functions.php";
 
 
 if (isset($_GET['allRecords']) && $_GET['allRecords']) {
   $getAllRecords = true;
-
 } else {
   $getAllRecords = false;
   $recordId = $_GET['id'];
@@ -47,7 +41,11 @@ if ($recordType === 'content-item') {
 } else if ($recordType === 'image' || $recordType === 'divider') {
   $recordTableName = $recordTypePlural = $recordType .'s';
   $recordIdColumnName = $recordType . '_id';
-  $orderQuery = "default";
+  if ($getAllRecords && $recordType === 'image') {
+    $orderQuery = "ORDER BY image_timestamp ASC";
+  } else {
+    $orderQuery = "default";
+  }
 
 } else {
   // invalid type
@@ -63,7 +61,26 @@ if ($getAllRecords) {
   if ($recordType === 'content-item' && !$includeHidden) {
     // don't include hidden items
     $dataArray = $findRecord -> search($recordTableName, $orderQuery, 'hidden', 0);
-  } else {
+  } else if (!$includeHidden && ($recordType == 'image' || $recordType == 'divider')) {
+    // record type is not content-item, but hidden items must not be included
+    $dataArray = $findRecord -> search($recordTableName, $orderQuery);
+
+    // loop through each of the returned items and remove from array if hidden
+    // NOTE: this is absolutely not the best way to do this,
+    //    but a quick solution was desired
+    foreach ($dataArray as $i => $data) {
+
+      if ($findRecord ->
+        search('content_items', '', $recordType.'_id', $data[$recordType.'_id'])[0]['hidden'] === '1'
+      ) {
+        // item should be hidden, since hidden value in content_items table
+        //    is 'truthy' for this record
+        unset($dataArray[$i]);
+      }
+    }
+
+  }
+  else {
     // include hidden items
     $dataArray = $findRecord -> search($recordTableName, $orderQuery);
   }
@@ -114,6 +131,10 @@ if ($getAllRecords) {
 }
 
 $attributes = array();
+$imageOrderVal = 0;
+
+//pretty_var_dump($dataArray);
+
 
 foreach ($dataArray as $data) {
 
@@ -128,7 +149,13 @@ foreach ($dataArray as $data) {
     'attributes' => $attributes
   );
 
-  if ($getAllRecords) {
+  if ($getAllRecords && $recordType === 'image') {
+    // add ephemeral image-order information (auto-gen)
+    $recordOutputData['attributes']['order-ephemeral'] = $imageOrderVal;
+    $imageOrderVal++;
+
+    $outputData['data'][] = $recordOutputData;
+  } else if ($getAllRecords) {
     $outputData['data'][] = $recordOutputData;
   } else {
     $outputData['data'] = $recordOutputData;
