@@ -22,7 +22,8 @@
 
 
 body {
-  font-family: 'Roboto Mono', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  background: black;
 }
 
 .thumbnail-section {
@@ -39,7 +40,7 @@ div.image-thumbnail {
   display: inline-block;
   width: 50%;
   //max-width: 300px;
-  border: 1px solid white;
+  border: 1px solid black;
 
   @include media-breakpoint-up(sm) {
     width: 25%;
@@ -56,9 +57,11 @@ div.image-thumbnail img {
   width: 100%;
   background-color: $divider-background-color;
   color: $divider-primary-color;
-  padding: 40px 10px 5px 10px;
-  margin: 1px 0;
+  padding: 10px 10px 10px 10px;
+  margin: 20px 0 0 0;
   font-size: 14px;
+  border-top: 1px solid $divider-border-color;
+  //border-bottom: 1px solid $divider-border-color;
 
 
   .primary, .secondary {
@@ -71,18 +74,26 @@ div.image-thumbnail img {
   }
 
   .secondary {
-    color: rgb(150,150,150);
+    color: $divider-secondary-color;
     text-align: right;
     font-weight: $secondary-font-weight;
 
   }
 }
-
-@include media-breakpoint-up(sm) {
-  .divider {
-
-  }
+.divider-hr {
+  height: 1px;
+  width: 100%;
+  margin: 5px 0 0 0;
+  border-top: 1px solid $divider-border-color;
+  //border-bottom: 1px solid $divider-border-color;
 }
+
+
+// @include media-breakpoint-up(sm) {
+//   .divider {
+//
+//   }
+// }
 
 .thumbnail-section {
   width: 100%;
@@ -90,7 +101,6 @@ div.image-thumbnail img {
 
   }
 }
-
 
 
 .hidden {
@@ -113,7 +123,16 @@ div.image-thumbnail img {
   color: white;
   p, a {
     margin: 0;
-    font-size: 16px;
+    &.primary {
+      font-weight: $secondary-font-weight;
+      font-size: 16px;
+
+    }
+    &.secondary {
+      font-weight: $tertiary-font-weight;
+      font-size: 14px;
+    }
+
   }
   a {
     color: white;
@@ -173,8 +192,6 @@ div.image-thumbnail img {
 }
 
 
-
-
 .absolute-centered {
   position: fixed;
   top: 0;
@@ -186,82 +203,6 @@ div.image-thumbnail img {
   margin: auto;
   overflow: auto;
 }
-
-//
-// .show-image {
-//   width: 100vw;
-//   height: 100vh;
-//   background-color: black;
-//   overflow: hidden;
-//   position:fixed;
-// }
-//
-// .image-fullscreen {
-//   position: fixed;
-//   top: - $photo-info-panel-height;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-//   max-width: 100%;
-//   max-height: calc(100% - #{$photo-info-panel-height});
-//   margin: auto;
-//   overflow: auto;
-//
-// }
-//
-// .absolute-centered {
-//   position: fixed;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-//   max-width: 100%;
-//   max-height: 100%;
-//   margin: auto;
-//   overflow: auto;
-// }
-//
-// .image-info {
-//   position: fixed;
-//   bottom: 0;
-//   height: $photo-info-panel-height;
-//   max-width: 100%;
-//   max-height: $photo-info-panel-height;
-//   margin: 0 auto;
-//   overflow: auto;
-//   left: 0;
-//   right: 0;
-//   width: 100%;
-//   z-index: 100;
-//   color: white;
-//   text-align: center;
-//
-//   p {
-//     margin: 0;
-//     font-size: 14px;
-//   }
-
-
-
-  //
-  // position: fixed;
-  // bottom: 20px;
-  // right: 20px;
-  // width: 50px;
-  // height: 50px;
-  //
-  // max-width: 100%;
-  // max-height: 100%;
-
-  // &.beneath-image {
-  //   color: red;
-  // }
-  // &.overlaying-image {
-  //   color: green;
-  // }
-
-
-
 
 
 

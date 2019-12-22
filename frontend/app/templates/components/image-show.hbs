@@ -5,8 +5,8 @@
       <span class="sr-only">Loading...</span>
     </div>
     <div class="image-loading-info">
-      <p>{{image.title}}</p>
-      {{image-coords image=image}}
+      <p class="primary">{{image.title}}</p>
+      <p class="secondary">{{image-coords image=image}}</p>
     </div>
 
   </div>
@@ -15,8 +15,8 @@
   <img src={{image.src}} alt={{image.title}} class="image-fullscreen hidden">
 
   <div class="image-info hidden">
-    <p>{{image.title}}</p>
-    {{image-coords image=image}}
+    <p class="primary">{{image.title}}</p>
+    <p class="secondary">{{image-coords image=image}}</p>
   </div>
 
 </div>
